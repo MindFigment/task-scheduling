@@ -72,12 +72,12 @@ class CMP(object):
         # if no succesor latest execution = critical end execution - my execution time
         for node in reversed(self.topological_sort):   
             successors = self._get_node_successors(node)
-            successors_earliest_exec_times = self._get_from_dict(successors, 'ee', default=[critical_end_time])
+            successors_earliest_exec_times = self._get_from_dict(successors, 'le', default=[critical_end_time])
             self.nodes_dict[node]['le'] = min(successors_earliest_exec_times) - self.nodes_dict[node]['weight']
             if self.nodes_dict[node]['le'] == self.nodes_dict[node]['ee']:
                 critical_nodes.append(node)
                 critical_edges.extend(self._create_critical_edges(node, self._find_critical_successors(node, successors)))
-        print("CRITICAL EDGES", critical_edges)
+
         return critical_nodes, critical_edges
 
 

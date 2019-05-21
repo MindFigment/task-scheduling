@@ -64,7 +64,7 @@ class CoffmanGrahan(object):
     def _get_succesors_sorted_labels(self, node):
         output = list(map(lambda n: self.nodes_dict[n]['label'], self._get_node_successors(node)))
         # print(sorted(output, reverse=True))
-        return sorted(output)
+        return sorted(output, reverse=True)
 
 
     def _check_if_all_predecessors_successors_labeled(self, node):
@@ -127,7 +127,7 @@ class CoffmanGrahan(object):
                 task_names.append(current_task)
                 print("Remove", current_task, "from", task_order)
                 task_order.remove(current_task)
-
+    
                 if task_order != []:
                     if current_task_index < len(task_order) and current_machine < num_machines:
                         # No need to increment currint index after removing task from task_order list
@@ -160,7 +160,8 @@ def draw_graph(cof_gra):
     _ = plt.figure()
     graph = cof_gra.graph
     nodes_dict = cof_gra.nodes_dict
-    pos = nx.circular_layout(graph)
+    # pos = nx.circular_layout(graph)  
+    pos = nx.kamada_kawai_layout(graph)
     nx.draw_networkx_nodes(graph, pos, node_size=1000)
     nx.draw_networkx_edges(graph, pos, node_size=1000, arrowsize=20, alpha=0.7)
     node_labels = dict((n, str(n + '\n' + str(d['label']) + '\n' + str(d['s_list']))) for n, d in nodes_dict.items())
