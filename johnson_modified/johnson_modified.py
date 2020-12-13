@@ -45,9 +45,13 @@ class JohnsonModified(object):
         m1 = self.tasks['M1']
         m2 = self.tasks['M2']
         m3 = self.tasks['M3']
-        if all([t1 >= t2 for t1, t2 in zip(m1, m2)]):
+        min1 = min(m1)
+        max2 = max(m2)
+        min3 = min(m3)
+        if all([t1 >= t2 for t1, t2 in zip(m1, m2)]) and min1 >= max2:
             print("M1 dominates M2")
-        elif all([t3 >= t2 for t3, t2 in zip(m3, m2)]):
+        elif all([t3 >= t2 for t3, t2 in zip(m3, m2)]) and min3 >= max2:
+            
             print("M3 dominates M2")
         else:
             raise ValueError("M2 is not dominated!")
